@@ -5,9 +5,16 @@ import phonemizer
 import re
 
 # Set espeak-ng library path and espeak-ng-data
-EspeakWrapper.set_library(espeakng_loader.get_library_path())
+try:
+    EspeakWrapper.set_library(espeakng_loader.get_library_path())
+except Exception:
+    pass  # Library already set or not needed
+
 # Change data_path as needed when editing espeak-ng phonemes
-EspeakWrapper.set_data_path(espeakng_loader.get_data_path())
+try:
+    EspeakWrapper.set_data_path(espeakng_loader.get_data_path())
+except AttributeError:
+    pass  # Older phonemizer version doesn't have set_data_path
 
 # EspeakFallback is used as a last resort for English
 class EspeakFallback:
