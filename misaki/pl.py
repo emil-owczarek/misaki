@@ -14,8 +14,14 @@ import re
 
 try:
     import espeakng_loader
-    EspeakWrapper.set_library(espeakng_loader.get_library_path())
-    EspeakWrapper.set_data_path(espeakng_loader.get_data_path())
+    try:
+        EspeakWrapper.set_library(espeakng_loader.get_library_path())
+    except Exception:
+        pass  # Library already set or not needed
+    try:
+        EspeakWrapper.set_data_path(espeakng_loader.get_data_path())
+    except AttributeError:
+        pass  # Older phonemizer version doesn't have set_data_path
 except ImportError:
     pass  # espeak-ng must be installed system-wide
 
